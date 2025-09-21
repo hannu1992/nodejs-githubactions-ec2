@@ -8,7 +8,7 @@ This project demonstrates a **simple production-like setup** for deploying a Nod
 - **GitHub Actions** (CI/CD pipeline)
 - **EC2 (Ubuntu)** (deployment target)
 
-It’s designed as a minimal example for practicing **DevOps workflows** and **Solution Architect skills**.
+It’s designed as a minimal example for practicing **DevOps workflows** and **AWS Solution Architect skills**.
 
 ---
 
@@ -18,8 +18,20 @@ It’s designed as a minimal example for practicing **DevOps workflows** and **S
 - GitHub Actions pipeline:
   - **Build & Push** Docker image to Docker Hub
   - **Deploy** to EC2 via SSH
-- Automatic container restart on EC2
-- Tagged builds for reproducibility (`testing-<commit-sha>` + `latest`)
+- Tagged builds for reproducibility (`testing-<commit-sha>` / `production-<commit-sha>` + moving tags)
+- Separate **testing** and **production** environments with secrets
+- Optional **QA approval gate** for production deploys
+
+---
+
+## 📊 Architecture
+![Architecture Diagram](./docs/architecture.png)
+
+**Pipeline Flow**:  
+1. Developer pushes code → GitHub Actions triggers  
+2. GitHub builds & pushes Docker image → Docker Hub  
+3. GitHub SSHs into **EC2 testing** → pulls & runs container  
+4. On merge to `production` branch → QA approves → GitHub deploys to **EC2 production**
 
 ---
 
